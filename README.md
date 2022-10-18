@@ -1,9 +1,23 @@
 # SprintBootIntro
 A simple CRUD program that utilized Springboot &amp; postgres to be ran. &amp; is written in Java.
 
+## Content of This Github Repository:
+	-demo.zip : the initial project we started with that was downloaded from Spring Initializr.  
+	-DemoApplication.java : main file we use to run the API.  
+	-pom.xml : our xml file that has our dependancies. Spring Initializr made for us.  
+	-application.properties : our properties file we use later on to define the data base we connect to.
+	-student folder : Folder contains a few files:  
+		-Student.java : our student class that has setters, getters, constructors of our student data.  
+		-StudentConfig.java : our Configuration file. has our initial starting data for our data base.  
+		-StudentController.java : Our RestController that controls our API & calls for the functions neccessary.  
+		-StudentRepository.java : Our Repository.  
+		-StudentService.java : Our Service Layer providing functionality for our API.  
+
+## What Are We Doing?  
+
 We are going to be building an application. It excludes any front end dev requirements, going to be fully back end. 
 
-The API will recieve GET, POST, PUT & DELETE requests & act on them. (Basic CRUD functions)
+##The API will recieve GET, POST, PUT & DELETE requests & act on them. (Basic CRUD functions)
 
 We will also have a Service Layer, wwhich will handle business logic.
 
@@ -11,59 +25,59 @@ Then we have a Data Access Layer, it is responsible for connection to our data b
 
 Then finally our database being connected to, using Postgresql.
 
-To start:
+## To start:
 
 Head to Spring  Initializr: 
 
-https://start.spring.io/
+	https://start.spring.io/
 
-We are using a Maven Project.
+	We are using a Maven Project.
 
-Our Language is Java.
+	Our Language is Java.
 
-You can use the latest stable Spring Boot. (For me Spring Boot 2.7.4)
+	You can use the latest stable Spring Boot. (For me Spring Boot 2.7.4)
 
-as for the project metadata you can leave it as is or change it to your liking. Packaging of course is Jar or War, whichever you can extract. for me i used War.
+	as for the project metadata you can leave it as is or change it to your liking. Packaging of course is Jar or War, whichever you can extract. for me i used War.
 
-And i used Java 18 as it is the version i was using, but you can use whichever you have.
+	And i used Java 18 as it is the version i was using, but you can use whichever you have.
 
-For the Dependancies we need a few Dependancies:
-1. Spring Web.
-2. Spring Data JPA. (Connection to our database is going to be through JPA & Hibernate).
-3. PostgreSQL Driver. (For PostgreSQL Compatability since we are using it).
+	For the Dependancies we need a few Dependancies:
+		1. Spring Web.
+		2. Spring Data JPA. (Connection to our database is going to be through JPA & Hibernate).
+		3. PostgreSQL Driver. (For PostgreSQL Compatability since we are using it).
 
-I will be linking a link to do the Spring Initializr Step for you incase any issues arise.
+### I will be linking a link to do the Spring Initializr Step for you incase any issues arise.
 Link : https://start.spring.io/#!type=maven-project&language=java&platformVersion=2.7.4&packaging=jar&jvmVersion=17&groupId=com.example&artifactId=demo&name=demo&description=Demo%20project%20for%20Spring%20Boot&packageName=com.example.demo&dependencies=web,data-jpa,postgresql
 
-Generate your Spring Folder.
+#### Generate your Spring Folder. Download it & Extract it where you want it to be.
 
-Download it & Extract it where you want it to be.
+## NEXT: We open it using Intellij. I Used Intellij Community Edition. 
 
-NEXT: We open it using Intellij. I Used Intellij Community Edition. 
-
-Expand it, and you will see a file named pom.xml. it has the project meta data & the dependencies we chose earlier. and a testing dependency given to us by spring boot itself.
+Expand it, and you will see a file named pom.xml. it has the project meta data & the dependencies we chose earlier. and a testing dependency given to us by spring boot itself.  
 The file also includes the java version you use in the properties tag and project details all at the top.
+  
 In the top the Parent is spring-boot-starter-parent given us also by spring boot itself to make it run.
-
-Starting the application is  easy.
-
+  
+### Starting the application is  easy.
+  
 From demo expand src. test folder is for testing purposes. main folder is what we are going to be interested in.
-
+  
 in main expand java. in java there is the DemoApplication or <name>Application depending on which name you gave your project. thats the file we will be running to start our app.
-
+  
 Inside the DemoApplication or <name>Application file is a very empty and simple Spring Boot Application.
-
+  
 In the main folder again, in the resources folder there exists a file named application.properties, this is where we can configure all the properties for our application and environment specific properties. This will be expanded further. 
 The static and Templates folders in the resources folder are for web development purposes. (HTML CSS and such).
-
+  
 Run DemoApplication/<name>Application
-
-It wwill fail, because it will try connecting to a database but we dont have one yet. so we have to remove the connection related dependancy to be able to run it for now.
-
+  
+It will fail, because it will try connecting to a database but we dont have one yet. so we have to remove the connection related dependancy to be able to run it for now.
+  
 To make it run for now, go to pom.xml
-
-One of the dependancies with the artifactId of "spring-boot-starter-data-jpa" that whole dependancy has to be commented out so it will go from;
-
+  
+One of the dependancies with the artifactId of "spring-boot-starter-data-jpa" that whole dependancy has to be commented out so it will go from:  
+	 
+```html
 <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -77,13 +91,13 @@ TO:
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 </dependency>
 -->
-
+```
 Then to make sure it applied you have to right click on pom.xml & hover over maven, then click on "reload project". It should reload automatically eventually but we do this to make sure it does when we want it to.
 
 Now we run it we shouldnt face any issues or any exit codes.
 
-logs will look something like this:
-
+#### logs will look something like this:
+```
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
 ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
@@ -101,17 +115,17 @@ logs will look something like this:
 2022-10-17 16:25:01.796  INFO 13516 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1308 ms
 2022-10-17 16:25:02.239  INFO 13516 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
 2022-10-17 16:25:02.251  INFO 13516 --- [           main] com.example.demo.Demo2Application        : Started Demo2Application in 2.477 seconds (JVM running for 3.112)
-
+```
 
 on the third line, with tomcat. you will see "Tomcat initialized with port(s): 8080 (http)".
-
+  
 The port 8080 is the one our program is connected to right now. This means we are running a webserver and we can access it so see the data by using localhost:8080
-
+  
 It will be empty for now but we can have some stuff in it. and Spring Boot returns such stuff in json format, which is good for handling them.
-
+  
 So now that we are done with the setup, breif explainations of what happens will be given below.
-
-our Java code will be simple, 
+  
+#### our Java code will be simple, 
 
 ```java
 package com.example.demo;
@@ -562,7 +576,7 @@ To see its relationships.
 
 Now that we did this we can uncomment the dependancy we commented out in the begining in the pom.xml file.
 
-```HTML
+```html
 <!--
 <dependency>
 			<groupId>org.springframework.boot</groupId>
