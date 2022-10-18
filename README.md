@@ -106,7 +106,7 @@ Now we run it we shouldnt face any issues or any exit codes.
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v2.7.4)
 
-2022-10-17 16:25:00.400  INFO 13516 --- [           main] com.example.demo.Demo2Application        : Starting Demo2Application using Java 18.0.2 on LAPTOP-DJ7TT85R with PID 13516
+2022-10-17 16:25:00.400  INFO 13516 --- [           main] com.example.demo.Demo2Application        : Starting Demo2Application using Java 18.0.2 on [Your LAPTOP ID] with PID 13516
 2022-10-17 16:25:00.404  INFO 13516 --- [           main] com.example.demo.Demo2Application        : No active profile set, falling back to 1 default profile: "default"
 2022-10-17 16:25:01.680  INFO 13516 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
 2022-10-17 16:25:01.689  INFO 13516 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
