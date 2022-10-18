@@ -454,16 +454,16 @@ if the email doesnt exist in the repo already we save the current details given.
 ```
 
 for DELETE:
-
+  
 in the studentService class, we create a function deleteStudent(Long studentID): 
-
+  
 Then we have to see if the ID given to be deleted exists and has a student related to it. to do so we create a boolean exists that returns true if it exists. 
 it is done with :
 
 ```java
 boolean exists = studentRepository.existsById(studentID);
 ```
-
+  
 if ID doesnt exist then we have to return an error message like before with an appropriate message. else we can delete the data using .deleteByID. the final function will look like:
 ```java
 	public void deleteStudent(Long studentID) {
@@ -484,13 +484,13 @@ we first check if the student exists with its ID like this:
  Student student = studentRepository.findById(studentID).orElseThrow(
                 () -> new IllegalStateException("student with ID " + studentID + " doesnt exist"));
 ``` 
-
+  
 Then if the name given is different from the one that already exists, we can change it and we do it with .setName. we also have to make sure that the name is not empty and not null. 
-
+  
 The same is done for the email but with the exception of us giving an error if the email is taken by a different user. if the email isnt taken and is valifd we can update is with .setEmail.
-
+  
 At the top of this function we add @Transactional so we can use the setters and getters we want. The function in the end will look like this:
-
+  
 ```java
 	@Transactional
     public void updateStudent(Long studentID,String name,String email) {
@@ -509,10 +509,10 @@ At the top of this function we add @Transactional so we can use the setters and 
     }
 ```
 
-
-Now that we are done with the hefty parts, we now need to set up our PostgreSQL server and connect it to be able to test if it actually works.
-
-in the resources folder we need to go to the application.properties and add the following text:
+  
+Now that we are done with the hefty parts, we now need to set up our PostgreSQL server and connect it to be able to test if it actually works.  
+  
+in the resources folder we need to go to the application.properties and add the following text:  
 
 ```
 	spring.datasource.url=jdbc:postgresql://localhost:5432/student
@@ -524,58 +524,58 @@ in the resources folder we need to go to the application.properties and add the 
 	spring.jpa.properties.hibernate.format_sql=true
 	server.error.include-message=always
 ```
-
-"spring.datasource.url=jdbc:postgresql://localhost:5432/student" is the url  to the postgresql database we will start later
-
-"spring.datasource.username=
-spring.datasource.password=12345" 
-are the username & password for the database you will set when creating it.
-
-"
-spring.jpa.hibernate.ddl-auto=create-drop
-spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-spring.jpa.properties.hibernate.format_sql=true
-"
-
+  
+"spring.datasource.url=jdbc:postgresql://localhost:5432/student" is the url  to the postgresql database we will start later  
+  
+"spring.datasource.username=  
+spring.datasource.password=12345"   
+are the username & password for the database you will set when creating it.  
+  
+"  
+spring.jpa.hibernate.ddl-auto=create-drop  
+spring.jpa.show-sql=true  
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect  
+spring.jpa.properties.hibernate.format_sql=true  
+"  
+  
 Gives spring.jpa  its properties.
-
-"
+  
+"  
 server.error.include-message=always
-"
+"  
 This will allow error messages appear.
-
-
+  
+  
 After doing so, we have to install PostgreSQL
+  
+I will have a seperate document regarding its installation & bugs you may encounter, but here i will only show the main steps we have to do.  
+   
+After installing the latest PostgreSQL, we open the shell, Search SQL on your laptop and open "SQL Shell (psql)". thats the shell for postgresql.  
+Leave the server as it is.  
+leave the Database as it is.  
+keep the port as 5432   
+keep the username as it is, empty  
+and key in the password you put in when installing postgres. After so,  
+  
+Key in: CREATE DATABASE student;  
+Then pass privellages to it: GRANT ALL PRIVILEGES ON DATABASE "student" TO postgres;  
+// if encounter issues with cant see user : Then create a ROLE with superuser privilages, the name of the role should be the same as your computer user  
+  
+key in: \l   
+  
+you will see all the databases we have. in our case we should see student in there somewhere.  
+  
 
-I will have a seperate document regarding its installation & bugs you may encounter, but here i will only show the main steps we have to do.
- 
-After installing the latest PostgreSQL, we open the shell, Search SQL on your laptop and open "SQL Shell (psql)". thats the shell for postgresql.
-Leave the server as it is.
-leave the Database as it is.
-keep the port as 5432
-keep the username as it is, empty
-and key in the password you put in when installing postgres. After so,
-
-Key in: CREATE DATABASE student;
-Then pass privellages to it: GRANT ALL PRIVILEGES ON DATABASE "student" TO postgres;
-// if encounter issues with cant see user : Then create a ROLE with superuser privilages, the name of the role should be the same as your computer user
-
-key in: \l 
-
-you will see all the databases we have. in our case we should see student in there somewhere.
-
-
-key in: \c student
-
-to connect to the student databse
-
-key in: \d
-
-To see its relationships.
-
-Now that we did this we can uncomment the dependancy we commented out in the begining in the pom.xml file.
-
+key in: \c student  
+  
+to connect to the student databse  
+  
+key in: \d  
+  
+To see its relationships.  
+  
+Now that we did this we can uncomment the dependancy we commented out in the begining in the pom.xml file.  
+  
 ```html
 <!--
 <dependency>
@@ -583,22 +583,22 @@ Now that we did this we can uncomment the dependancy we commented out in the beg
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 </dependency>
 -->
-```	
-TO:
-```HTML
+```  	
+TO:  
+```html
 <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 </dependency>
 ```
-
-Then run the program throught demoApplication/<name>Application & your server is working.
-
-Now we can use something like Postman to GET, POST, PUT & DELETE with the link being http://localhost:8081/api/v1/student
-
-For GET we have it as: GET http://localhost:8080/api/v1/student
-
-For POST we have it as: POST http://localhost:8080/api/v1/student with the body of 
+  
+Then run the program throught demoApplication/<name>Application & your server is working.  
+  
+Now we can use something like Postman to GET, POST, PUT & DELETE with the link being http://localhost:8081/api/v1/student  
+  
+For GET we have it as: GET http://localhost:8080/api/v1/student   
+  
+For POST we have it as: POST http://localhost:8080/api/v1/student with the body of   
 ```json
 {
     "name": "hamza",
@@ -607,18 +607,18 @@ For POST we have it as: POST http://localhost:8080/api/v1/student with the body 
 }
 ```
 
-For the DELETE we specifiy the ID by adding it to the end of the Link: DELETE http://localhost:8080/api/v1/student/1
+For the DELETE we specifiy the ID by adding it to the end of the Link: DELETE http://localhost:8080/api/v1/student/1  
+  
+For the PUT, we specify the things we want to change in the link as well: PUT http://localhost:8080/api/v1/student/?name=hamada&email=hamada@gmail.com  
+  
+If your want only email or name your remove whicher & the "&"  
 
-For the PUT, we specify the things we want to change in the link as well: PUT http://localhost:8080/api/v1/student/?name=hamada&email=hamada@gmail.com
-
-If your want only email or name your remove whicher & the "&"
-
-.
+.  
 
 And that should be it for the project. you can make it into a jar file after.
-
+  
 we click on the maven tab to the right . open the demo tab then open the Lifecycle tab and click on clean And run it. then after it is complete you click on install and run it. and it will produce a jar file you are able to run in t he terminal. 
-
+  
 it can be run with
 
 ```
@@ -630,51 +630,7 @@ and you can give it a specific port if 8080 is not what you want with
 ```
 java -jar demo-0.0.1-SNAPSHOT.jar --server.port=8081
 ```
-
+  
 And thats how you can do this project.
-
+  
 Overall, during this whole leangthy process we made an API thats capable of basic CRUD behaviours using Spring Boot with PostgreSQL. it was a nice & enlightning process to learn something new  & interesting. definetly more there to learn as this is just the begining in my Java and SpringBoot journey.
-
-
-
-Issues may be faced when trying to run the program with postgres:
-1. May get an invalid password error
-	-make sure the password in the application properties is correct. The username also has to be the same.
-
-```
-	spring.datasource.url=jdbc:postgresql://localhost:5432/student
-	spring.datasource.username=
-	spring.datasource.password=12345
-	spring.jpa.hibernate.ddl-auto=create-drop
-	spring.jpa.show-sql=true
-	spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-	spring.jpa.properties.hibernate.format_sql=true
-	server.error.include-message=always
-```
-	- if it still doesnt work:
-	-in C:\Program Files\PostgreSQL\15\data , the file "pg_hba.conf"  scroll to the bottom & make your connection type like this:
-	```
-		# TYPE  DATABASE        USER            ADDRESS                 METHOD
-
-		# "local" is for Unix domain socket connections only
-		local   all             all                                     trust
-		# IPv4 local connections:
-		host    all             all             127.0.0.1/32            trust
-		# IPv6 local connections:
-		host    all             all             ::1/128                 trust
-		# Allow replication connections from localhost, by a user with the
-		# replication privilege.
-		local   replication     all                                     scram-sha-256
-		host    replication     all             127.0.0.1/32            scram-sha-256
-		host    replication     all             ::1/128                 scram-sha-256
-	```
-	- We changed the METHOD from scram-sha-256 to trust.
-
-2. The server may not recognise your role.
-
-so in SQL Shell we have to create a superuser Role with the same name the program cant recognise. to do so, in the shell:
-	key in: CREATE ROLE rolename LOGIN SUPERUSER PASSWORD 'samePasswordYouUsed';
-```
-	Key note is: i am not sure if those troubleshooting methods are good. but it made the program run for me and hence it is why i did it.
-```
-
