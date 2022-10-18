@@ -12,6 +12,8 @@ A simple CRUD program that utilized Springboot &amp; postgres to be ran. &amp; i
 		-StudentController.java : Our RestController that controls our API & calls for the functions neccessary.  
 		-StudentRepository.java : Our Repository.  
 		-StudentService.java : Our Service Layer providing functionality for our API.  
+		
+## Before we start, if you have any issues you may feel free to send me an email through ahmedfathyabdelaaal@gmail.com and i will try to help : D 
 
 ## What Are We Doing?  
 
